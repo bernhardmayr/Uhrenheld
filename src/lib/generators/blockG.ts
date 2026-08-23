@@ -21,7 +21,19 @@ const TOWNS = [
   'Tannheim',
   'Ulmenhof',
   'Weidenau',
+  'Eichenried',
+  'Fichtendorf',
+  'Hainbach',
+  'Kastanienhof',
+  'Pappelhausen',
 ];
+
+const VEHICLES = [
+  { name: 'Zug', verb: 'fährt' },
+  { name: 'Bus', verb: 'fährt' },
+  { name: 'Bahn', verb: 'fährt' },
+  { name: 'Auto', verb: 'fährt' },
+] as const;
 
 function pickRoute(rng: Rng, count: number): string[] {
   const pool = [...TOWNS];
@@ -42,9 +54,10 @@ export function generateBlockG(rng: Rng, difficulty: Difficulty): Task {
     const departure = rng.int(6, 18) * 60 + rng.pick([0, 15, 30, 45]);
     const travel = rng.pick([60, 75, 90, 105, 120]);
     const arrival = addMinutes(departure, travel);
+    const vehicle = rng.pick(VEHICLES);
     return {
       ...base,
-      prompt: `Der Zug fährt um ${formatClock(departure)} in ${from} ab und braucht ${formatDuration(travel)} bis ${to}. Wann kommt er an?`,
+      prompt: `${vehicle.name.charAt(0).toUpperCase() + vehicle.name.slice(1)} ${vehicle.verb} um ${formatClock(departure)} in ${from} ab und braucht ${formatDuration(travel)} bis ${to}. Wann kommt ${vehicle.name} an?`,
       input: { widget: 'time' },
       solution: { type: 'time', accepted: [arrival] },
       solutionText: formatClock(arrival),

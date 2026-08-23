@@ -63,6 +63,46 @@ const SITUATIONS: Situation[] = [
     unit: 'h',
     why: 'Schlaf über die Nacht misst man in Stunden.',
   },
+  {
+    text: 'Sara atmet etwa 1 ___ pro Atemzug ein.',
+    unit: 's',
+    why: 'Ein Atemzug dauert nur wenige Sekunden.',
+  },
+  {
+    text: 'Die Schulpause hat 15 ___.',
+    unit: 'min',
+    why: 'Eine Schulpause dauert ein paar Minuten.',
+  },
+  {
+    text: 'Moritz springt 50 Mal im Seil – das dauert 2 ___.',
+    unit: 'min',
+    why: 'Mehrmaliges Seilspringen dauert ein paar Minuten.',
+  },
+  {
+    text: 'Ein Konzert mit einer Band geht etwa 2 ___.',
+    unit: 'h',
+    why: 'Ein Musikkonzert dauert mehrere Stunden.',
+  },
+  {
+    text: 'Zum Haare waschen braucht Lena 7 ___.',
+    unit: 'min',
+    why: 'Haare waschen dauert ein paar Minuten.',
+  },
+  {
+    text: 'Ein Wettlauf über 100 m dauert weniger als 30 ___.',
+    unit: 's',
+    why: 'Ein Sprint ist sehr schnell – nur wenige Sekunden.',
+  },
+  {
+    text: 'Eine Schulstunde mit Pause daheim dauert etwa 4 ___.',
+    unit: 'h',
+    why: 'Ein halber Schultag misst man in Stunden.',
+  },
+  {
+    text: 'Eine Mathearbeit schreiben dauert 45 ___.',
+    unit: 'min',
+    why: 'Eine Klassenarbeit dauert etwa eine Schulstunde.',
+  },
 ];
 
 const UNIT_LABELS = ['s', 'min', 'h'];

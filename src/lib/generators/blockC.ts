@@ -17,6 +17,11 @@ const ACTIVITIES = [
   'Schwimmen',
   'Malen',
   'Fußball',
+  'Klettern',
+  'Segeln',
+  'Reiten',
+  'Tanzen',
+  'Bogenschießen',
 ] as const;
 
 export function generateBlockC(rng: Rng, difficulty: Difficulty): Task {
