@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    /* Larger base text for young readers. */
+    font-size: 18px;
+  }
+
+  body {
+    @apply bg-orange-50 text-slate-800 antialiased;
+    min-height: 100vh;
+  }
+
+  /* Strong, visible focus ring for keyboard users. */
+  :focus-visible {
+    @apply outline-none ring-4 ring-heft-orange/60 ring-offset-2;
+  }
+}
+
+@layer components {
+  .heft-card {
+    @apply rounded-card bg-white shadow-md;
+  }
+
+  /* Touch targets are always at least 48px tall. */
+  .btn {
+    @apply inline-flex min-h-[48px] items-center justify-center rounded-2xl px-5
+      text-lg font-bold transition active:scale-95 disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply btn bg-heft-orange text-white shadow hover:bg-heft-orange-dark;
+  }
+
+  .btn-secondary {
+    @apply btn bg-heft-beige text-slate-800 hover:bg-heft-yellow;
+  }
+
+  .badge-number {
+    @apply inline-flex h-9 w-9 items-center justify-center rounded-lg
+      bg-heft-orange text-lg font-black text-white;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

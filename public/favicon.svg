@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Uhrenheld">
+  <rect width="512" height="512" rx="96" fill="#f97316"/>
+  <circle cx="256" cy="256" r="168" fill="#ffffff" stroke="#ea580c" stroke-width="14"/>
+  <g stroke="#94a3b8" stroke-width="6" stroke-linecap="round">
+    <line x1="256" y1="104" x2="256" y2="128"/>
+    <line x1="256" y1="384" x2="256" y2="408"/>
+    <line x1="104" y1="256" x2="128" y2="256"/>
+    <line x1="384" y1="256" x2="408" y2="256"/>
+  </g>
+  <!-- blue hour hand -->
+  <line x1="256" y1="256" x2="256" y2="168" stroke="#1d4ed8" stroke-width="16" stroke-linecap="round"/>
+  <!-- red minute hand -->
+  <line x1="256" y1="256" x2="344" y2="256" stroke="#dc2626" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="256" cy="256" r="14" fill="#1e293b"/>
+</svg>
