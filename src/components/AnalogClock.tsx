@@ -5,7 +5,11 @@
  * yellow sector can mark the running minute (Block E).
  *
  * It is fully described for screen readers via an aria-label and <title>.
+ *
+ * The static dial (ring, ticks, numerals) is exported as `ClockFace` so the
+ * draggable `SettableClock` can reuse the exact same drawing.
  */
+import { CLOCK_CENTER, CLOCK_R, polarPoint } from '../lib/clockGeometry';
 import { dayMinutesToTwelveHour } from '../lib/time';
 
 export interface AnalogClockProps {
@@ -20,70 +24,31 @@ export interface AnalogClockProps {
   className?: string;
 }
 
-const R = 100; // internal coordinate radius; viewBox is 0..240
-const CENTER = 120;
-
-/** Point on a circle of radius `radius`, angle in degrees clockwise from top. */
-function polar(angleDeg: number, radius: number): { x: number; y: number } {
-  const rad = ((angleDeg - 90) * Math.PI) / 180;
-  return {
-    x: CENTER + radius * Math.cos(rad),
-    y: CENTER + radius * Math.sin(rad),
-  };
-}
-
 function screenReaderTime(h12: number, minute: number): string {
   return `${h12} Uhr ${minute} Minuten`;
 }
 
-export function AnalogClock({
-  h12,
-  minute,
-  second = 0,
-  showSecond = false,
-  highlightSecondSector = false,
-  size = 240,
-  className,
-}: AnalogClockProps) {
-  const hourAngle = ((h12 % 12) + minute / 60) * 30;
-  const minuteAngle = minute * 6;
-  const secondAngle = second * 6;
-
+/** The non-interactive parts every clock face shares: ring, ticks, numerals. */
+export function ClockFace() {
   const ticks = Array.from({ length: 60 }, (_, i) => i);
   const numerals = Array.from({ length: 12 }, (_, i) => i + 1);
 
-  const hourEnd = polar(hourAngle, R * 0.5);
-  const minuteEnd = polar(minuteAngle, R * 0.8);
-  const secondEnd = polar(secondAngle, R * 0.85);
-
-  // Yellow sector path from 12 o'clock to the current second position.
-  const sectorEnd = polar(showSecond ? secondAngle : minuteAngle, R * 0.9);
-  const topPoint = polar(0, R * 0.9);
-  const largeArc = (showSecond ? secondAngle : minuteAngle) > 180 ? 1 : 0;
-  const sectorPath = `M ${CENTER} ${CENTER} L ${topPoint.x} ${topPoint.y} A ${R * 0.9} ${R * 0.9} 0 ${largeArc} 1 ${sectorEnd.x} ${sectorEnd.y} Z`;
-
   return (
-    <svg
-      viewBox="0 0 240 240"
-      width={size}
-      height={size}
-      role="img"
-      aria-label={`Analoguhr, sie zeigt ${screenReaderTime(h12, minute)}`}
-      className={className}
-    >
-      <title>{`Analoguhr: ${screenReaderTime(h12, minute)}`}</title>
-
-      <circle cx={CENTER} cy={CENTER} r={R + 12} fill="#ffffff" stroke="#ea580c" strokeWidth={6} />
-
-      {highlightSecondSector && (
-        <path d={sectorPath} fill="#fde68a" opacity={0.8} />
-      )}
+    <>
+      <circle
+        cx={CLOCK_CENTER}
+        cy={CLOCK_CENTER}
+        r={CLOCK_R + 12}
+        fill="#ffffff"
+        stroke="#ea580c"
+        strokeWidth={6}
+      />
 
       {/* Minute ticks; every 5th is longer (hour tick). */}
       {ticks.map((i) => {
         const isHour = i % 5 === 0;
-        const outer = polar(i * 6, R);
-        const inner = polar(i * 6, R - (isHour ? 12 : 6));
+        const outer = polarPoint(i * 6, CLOCK_R);
+        const inner = polarPoint(i * 6, CLOCK_R - (isHour ? 12 : 6));
         return (
           <line
             key={i}
@@ -100,7 +65,7 @@ export function AnalogClock({
 
       {/* Numerals 1..12. */}
       {numerals.map((n) => {
-        const p = polar(n * 30, R - 28);
+        const p = polarPoint(n * 30, CLOCK_R - 28);
         return (
           <text
             key={n}
@@ -116,11 +81,54 @@ export function AnalogClock({
           </text>
         );
       })}
+    </>
+  );
+}
+
+export function AnalogClock({
+  h12,
+  minute,
+  second = 0,
+  showSecond = false,
+  highlightSecondSector = false,
+  size = 240,
+  className,
+}: AnalogClockProps) {
+  const hourAngle = ((h12 % 12) + minute / 60) * 30;
+  const minuteAngle = minute * 6;
+  const secondAngle = second * 6;
+
+  const hourEnd = polarPoint(hourAngle, CLOCK_R * 0.5);
+  const minuteEnd = polarPoint(minuteAngle, CLOCK_R * 0.8);
+  const secondEnd = polarPoint(secondAngle, CLOCK_R * 0.85);
+
+  // Yellow sector path from 12 o'clock to the current second position.
+  const sectorEnd = polarPoint(showSecond ? secondAngle : minuteAngle, CLOCK_R * 0.9);
+  const topPoint = polarPoint(0, CLOCK_R * 0.9);
+  const largeArc = (showSecond ? secondAngle : minuteAngle) > 180 ? 1 : 0;
+  const sectorPath = `M ${CLOCK_CENTER} ${CLOCK_CENTER} L ${topPoint.x} ${topPoint.y} A ${CLOCK_R * 0.9} ${CLOCK_R * 0.9} 0 ${largeArc} 1 ${sectorEnd.x} ${sectorEnd.y} Z`;
+
+  return (
+    <svg
+      viewBox="0 0 240 240"
+      width={size}
+      height={size}
+      role="img"
+      aria-label={`Analoguhr, sie zeigt ${screenReaderTime(h12, minute)}`}
+      className={className}
+    >
+      <title>{`Analoguhr: ${screenReaderTime(h12, minute)}`}</title>
+
+      <ClockFace />
+
+      {highlightSecondSector && (
+        <path d={sectorPath} fill="#fde68a" opacity={0.8} />
+      )}
 
       {/* Blue hour hand. */}
       <line
-        x1={CENTER}
-        y1={CENTER}
+        x1={CLOCK_CENTER}
+        y1={CLOCK_CENTER}
         x2={hourEnd.x}
         y2={hourEnd.y}
         stroke="#1d4ed8"
@@ -129,8 +137,8 @@ export function AnalogClock({
       />
       {/* Red minute hand. */}
       <line
-        x1={CENTER}
-        y1={CENTER}
+        x1={CLOCK_CENTER}
+        y1={CLOCK_CENTER}
         x2={minuteEnd.x}
         y2={minuteEnd.y}
         stroke="#dc2626"
@@ -140,8 +148,8 @@ export function AnalogClock({
       {/* Optional amber second hand. */}
       {showSecond && (
         <line
-          x1={CENTER}
-          y1={CENTER}
+          x1={CLOCK_CENTER}
+          y1={CLOCK_CENTER}
           x2={secondEnd.x}
           y2={secondEnd.y}
           stroke="#f59e0b"
@@ -150,7 +158,7 @@ export function AnalogClock({
         />
       )}
 
-      <circle cx={CENTER} cy={CENTER} r={7} fill="#1e293b" />
+      <circle cx={CLOCK_CENTER} cy={CLOCK_CENTER} r={7} fill="#1e293b" />
     </svg>
   );
 }

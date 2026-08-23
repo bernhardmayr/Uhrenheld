@@ -70,7 +70,8 @@ export type InputSpec =
   | { widget: 'hm' } // hours + minutes -> total minutes
   | { widget: 'minsec' } // minutes + seconds -> total seconds
   | { widget: 'number'; unit: 's' | 'min' } // single integer
-  | { widget: 'choice'; options: string[] }; // multiple choice index
+  | { widget: 'choice'; options: string[] } // multiple choice index
+  | { widget: 'clockSet' }; // drag the hands to a dial position (h12 + minute)
 
 // --- Solutions ---------------------------------------------------------------
 
@@ -81,7 +82,8 @@ export type Solution =
   | { type: 'seconds'; value: number }
   | { type: 'hm'; total: number } // total minutes, entered as h + min
   | { type: 'minsec'; total: number } // total seconds, entered as min + s
-  | { type: 'choice'; correct: number };
+  | { type: 'choice'; correct: number }
+  | { type: 'clockPosition'; h12: number; minute: number }; // dial position, no AM/PM
 
 // --- User answers (produced by widgets) --------------------------------------
 
@@ -91,7 +93,8 @@ export type UserAnswer =
   | { widget: 'hm'; total: number }
   | { widget: 'minsec'; total: number }
   | { widget: 'number'; value: number }
-  | { widget: 'choice'; index: number };
+  | { widget: 'choice'; index: number }
+  | { widget: 'clockSet'; h12: number; minute: number };
 
 export interface Task {
   id: string;
@@ -142,6 +145,12 @@ export function checkAnswer(task: Task, answer: UserAnswer): boolean {
       return answer.widget === 'minsec' && answer.total === solution.total;
     case 'choice':
       return answer.widget === 'choice' && answer.index === solution.correct;
+    case 'clockPosition':
+      return (
+        answer.widget === 'clockSet' &&
+        answer.h12 === solution.h12 &&
+        answer.minute === solution.minute
+      );
     default:
       return false;
   }

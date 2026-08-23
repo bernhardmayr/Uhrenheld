@@ -24,6 +24,8 @@ function correctAnswer(task: Task): UserAnswer {
       return { widget: 'minsec', total: s.total };
     case 'choice':
       return { widget: 'choice', index: s.correct };
+    case 'clockPosition':
+      return { widget: 'clockSet', h12: s.h12, minute: s.minute };
   }
 }
 
@@ -44,6 +46,8 @@ function wrongAnswer(task: Task): UserAnswer {
       return { widget: 'minsec', total: s.total + 1 };
     case 'choice':
       return { widget: 'choice', index: (s.correct + 1) % 3 };
+    case 'clockPosition':
+      return { widget: 'clockSet', h12: (s.h12 % 12) + 1, minute: s.minute };
   }
 }
 
@@ -79,6 +83,40 @@ describe('block A double answer', () => {
     expect(
       checkAnswer(task, { widget: 'timeDouble', a: morning, b: morning }),
     ).toBe(false);
+  });
+});
+
+describe('block A interactive "set the clock" task', () => {
+  it('appears at difficulty 1/2 with a clockSet input and a matching solution', () => {
+    let found = false;
+    for (let seed = 1; seed < 200 && !found; seed++) {
+      const task = generateTask('A', createRng(seed), 1);
+      if (task.input.widget === 'clockSet') {
+        found = true;
+        expect(task.solution.type).toBe('clockPosition');
+        if (task.solution.type !== 'clockPosition') continue;
+        expect(task.solution.h12).toBeGreaterThanOrEqual(1);
+        expect(task.solution.h12).toBeLessThanOrEqual(12);
+        expect(task.solution.minute).toBeGreaterThanOrEqual(0);
+        expect(task.solution.minute).toBeLessThanOrEqual(59);
+        expect(task.visual).toBeUndefined();
+        expect(
+          checkAnswer(task, {
+            widget: 'clockSet',
+            h12: task.solution.h12,
+            minute: task.solution.minute,
+          }),
+        ).toBe(true);
+      }
+    }
+    expect(found).toBe(true);
+  });
+
+  it('never appears at difficulty 3 (no room for the double-answer format)', () => {
+    for (let seed = 1; seed <= 200; seed++) {
+      const task = generateTask('A', createRng(seed), 3);
+      expect(task.input.widget).not.toBe('clockSet');
+    }
   });
 });
 

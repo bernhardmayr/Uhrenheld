@@ -16,8 +16,12 @@
 - Punkte, Serie, Herzen, Sterne, Abzeichen, Levelkarte, Freischaltbares.
 - Eltern-/Lehreransicht, Einstellungen (Ton, Zeitdruck), localStorage.
 
-## M4 – Feinschliff (offen)
+## M4 – Feinschliff (in Arbeit)
+- ✅ Screenshots im README (Levelkarte, Aufgabe).
+- ✅ Render-/Interaktionstests für alle Screens (LevelMap, Results, Profile,
+  Parent, AnswerInput-Widgets).
+- ✅ Interaktive Uhr (Zeiger ziehen oder Pfeiltasten) als zusätzlicher
+  Aufgabentyp in Block A: „Stelle die Uhr ein" (`SettableClock`).
 - Mehr Aufgabenvarianten & Kontexte pro Block.
 - Animationen/Sounds ausbauen, weitere Abzeichen und Avatare.
-- Interaktive Uhr (Zeiger ziehen) als zusätzlicher Aufgabentyp.
-- E2E-Tests, Screenshots im README, Lighthouse/PWA-Audit.
+- E2E-Tests, Lighthouse/PWA-Audit.
