@@ -9,7 +9,10 @@ Punkten, Serien, Herzen, Sternen und Abzeichen statt Arbeitsblatt am Bildschirm.
 
 **Live-Demo:** https://bernhardmayr.github.io/uhrenheld/
 
-> _Screenshot-Platzhalter – hier kommt ein Bild der Levelkarte und einer Aufgabe hin._
+<p>
+  <img src="docs/screenshots/levelmap.png" alt="Levelkarte mit Stationen A–H" width="49%" />
+  <img src="docs/screenshots/task-clock.png" alt="Aufgabe: Uhr ablesen" width="49%" />
+</p>
 
 ## Features
 
