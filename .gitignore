@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dev-dist/
+coverage/
+
+# Editor / OS
+.DS_Store
+*.local
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Workbook reference photos: kept locally as the source for the analysis, but
+# not republished in this public repo (copyright). See docs/vorlagen-analyse.md.
+docs/vorlagen/*.jpg
+docs/vorlagen/*.jpeg
+docs/vorlagen/*.png
+*.tsbuildinfo
