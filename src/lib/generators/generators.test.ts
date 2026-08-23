@@ -120,6 +120,45 @@ describe('block A interactive "set the clock" task', () => {
   });
 });
 
+describe('block H word-problem variants', () => {
+  it('difficulty 1 only ever produces the single-step addition variant', () => {
+    for (let seed = 1; seed <= 100; seed++) {
+      const task = generateTask('H', createRng(seed), 1);
+      expect(task.prompt).toContain('Samstag');
+      expect(task.prompt).toContain('Sonntag');
+      expect(task.prompt).not.toContain('Tour');
+    }
+  });
+
+  it('difficulty 2 covers all three scenarios: tour, subtraction and addition', () => {
+    const seen = { tour: false, subtraction: false, addition: false };
+    for (let seed = 1; seed <= 300; seed++) {
+      const task = generateTask('H', createRng(seed), 2);
+      if (task.prompt.includes('Tour')) seen.tour = true;
+      else if (task.prompt.includes('insgesamt') && task.prompt.includes('waren es')) {
+        seen.subtraction = true;
+      } else {
+        seen.addition = true;
+      }
+    }
+    expect(seen).toEqual({ tour: true, subtraction: true, addition: true });
+  });
+
+  it('the subtraction variant is arithmetically consistent with its own prompt', () => {
+    let found = false;
+    for (let seed = 1; seed <= 300 && !found; seed++) {
+      const task = generateTask('H', createRng(seed), 2);
+      if (task.prompt.includes('waren es') && task.solution.type === 'hm') {
+        const total = Number(task.prompt.match(/insgesamt (\d+) Stunden/)?.[1]);
+        const saturday = Number(task.prompt.match(/waren es (\d+) Stunden/)?.[1]);
+        expect(task.solution.total).toBe((total - saturday) * 60);
+        found = true;
+      }
+    }
+    expect(found).toBe(true);
+  });
+});
+
 describe('block E stopwatch edge cases', () => {
   it('handles the minute roll-down 01:00 -> 00:59', () => {
     // Search seeds until we hit the 60s edge case, then verify the answer.
