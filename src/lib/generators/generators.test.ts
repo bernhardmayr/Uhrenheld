@@ -24,6 +24,8 @@ function correctAnswer(task: Task): UserAnswer {
       return { widget: 'minsec', total: s.total };
     case 'choice':
       return { widget: 'choice', index: s.correct };
+    case 'clockPosition':
+      return { widget: 'clockSet', h12: s.h12, minute: s.minute };
   }
 }
 
@@ -44,6 +46,8 @@ function wrongAnswer(task: Task): UserAnswer {
       return { widget: 'minsec', total: s.total + 1 };
     case 'choice':
       return { widget: 'choice', index: (s.correct + 1) % 3 };
+    case 'clockPosition':
+      return { widget: 'clockSet', h12: (s.h12 % 12) + 1, minute: s.minute };
   }
 }
 
@@ -79,6 +83,79 @@ describe('block A double answer', () => {
     expect(
       checkAnswer(task, { widget: 'timeDouble', a: morning, b: morning }),
     ).toBe(false);
+  });
+});
+
+describe('block A interactive "set the clock" task', () => {
+  it('appears at difficulty 1/2 with a clockSet input and a matching solution', () => {
+    let found = false;
+    for (let seed = 1; seed < 200 && !found; seed++) {
+      const task = generateTask('A', createRng(seed), 1);
+      if (task.input.widget === 'clockSet') {
+        found = true;
+        expect(task.solution.type).toBe('clockPosition');
+        if (task.solution.type !== 'clockPosition') continue;
+        expect(task.solution.h12).toBeGreaterThanOrEqual(1);
+        expect(task.solution.h12).toBeLessThanOrEqual(12);
+        expect(task.solution.minute).toBeGreaterThanOrEqual(0);
+        expect(task.solution.minute).toBeLessThanOrEqual(59);
+        expect(task.visual).toBeUndefined();
+        expect(
+          checkAnswer(task, {
+            widget: 'clockSet',
+            h12: task.solution.h12,
+            minute: task.solution.minute,
+          }),
+        ).toBe(true);
+      }
+    }
+    expect(found).toBe(true);
+  });
+
+  it('never appears at difficulty 3 (no room for the double-answer format)', () => {
+    for (let seed = 1; seed <= 200; seed++) {
+      const task = generateTask('A', createRng(seed), 3);
+      expect(task.input.widget).not.toBe('clockSet');
+    }
+  });
+});
+
+describe('block H word-problem variants', () => {
+  it('difficulty 1 only ever produces the single-step addition variant', () => {
+    for (let seed = 1; seed <= 100; seed++) {
+      const task = generateTask('H', createRng(seed), 1);
+      expect(task.prompt).toContain('Samstag');
+      expect(task.prompt).toContain('Sonntag');
+      expect(task.prompt).not.toContain('Tour');
+    }
+  });
+
+  it('difficulty 2 covers all three scenarios: tour, subtraction and addition', () => {
+    const seen = { tour: false, subtraction: false, addition: false };
+    for (let seed = 1; seed <= 300; seed++) {
+      const task = generateTask('H', createRng(seed), 2);
+      if (task.prompt.includes('Tour')) seen.tour = true;
+      else if (task.prompt.includes('insgesamt') && task.prompt.includes('waren es')) {
+        seen.subtraction = true;
+      } else {
+        seen.addition = true;
+      }
+    }
+    expect(seen).toEqual({ tour: true, subtraction: true, addition: true });
+  });
+
+  it('the subtraction variant is arithmetically consistent with its own prompt', () => {
+    let found = false;
+    for (let seed = 1; seed <= 300 && !found; seed++) {
+      const task = generateTask('H', createRng(seed), 2);
+      if (task.prompt.includes('waren es') && task.solution.type === 'hm') {
+        const total = Number(task.prompt.match(/insgesamt (\d+) Stunden/)?.[1]);
+        const saturday = Number(task.prompt.match(/waren es (\d+) Stunden/)?.[1]);
+        expect(task.solution.total).toBe((total - saturday) * 60);
+        found = true;
+      }
+    }
+    expect(found).toBe(true);
   });
 });
 

@@ -5,12 +5,40 @@
  */
 import { useState } from 'react';
 import type { InputSpec, UserAnswer } from '../lib/tasks';
+import { SettableClock, type ClockPosition } from './SettableClock';
 
 interface Props {
   input: InputSpec;
   disabled: boolean;
   onChange: (answer: UserAnswer | null) => void;
   onSubmit: (answer: UserAnswer) => void;
+}
+
+/** Wraps SettableClock: starts with no answer until the child moves a hand. */
+function ClockSetInput({
+  disabled,
+  onChange,
+}: {
+  disabled: boolean;
+  onChange: (answer: UserAnswer | null) => void;
+}) {
+  const [value, setValue] = useState<ClockPosition | null>(null);
+
+  return (
+    <div className="flex flex-col items-center gap-2">
+      <SettableClock
+        value={value ?? { h12: 12, minute: 0 }}
+        disabled={disabled}
+        onChange={(next) => {
+          setValue(next);
+          onChange({ widget: 'clockSet', h12: next.h12, minute: next.minute });
+        }}
+      />
+      <p className="text-sm text-slate-500">
+        Ziehe die Zeiger oder nutze nach dem Auswählen die Pfeiltasten.
+      </p>
+    </div>
+  );
 }
 
 function NumberBox({
@@ -166,6 +194,10 @@ export function AnswerInput({ input, disabled, onChange, onSubmit }: Props) {
           onValue={(v) => { setB(v); update(a, v); }} />
       </div>
     );
+  }
+
+  if (input.widget === 'clockSet') {
+    return <ClockSetInput disabled={disabled} onChange={emit} />;
   }
 
   // number

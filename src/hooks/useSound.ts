@@ -5,7 +5,7 @@
 import { useCallback, useRef } from 'react';
 import { useGameStore } from '../store/gameStore';
 
-type Cue = 'correct' | 'wrong' | 'win';
+type Cue = 'correct' | 'wrong' | 'win' | 'badge' | 'star' | 'perfect' | 'streak' | 'levelup';
 
 export function useSound() {
   const soundOn = useGameStore((s) => s.progress.settings.sound);
@@ -21,12 +21,40 @@ export function useSound() {
             .webkitAudioContext;
         if (!ctxRef.current) ctxRef.current = new AudioCtx();
         const ctx = ctxRef.current;
-        const notes =
-          cue === 'correct'
-            ? [523, 659]
-            : cue === 'win'
-              ? [523, 659, 784]
-              : [220];
+
+        let notes: number[];
+        switch (cue) {
+          case 'correct':
+            notes = [523, 659];
+            break;
+          case 'wrong':
+            notes = [220];
+            break;
+          case 'win':
+            notes = [523, 659, 784];
+            break;
+          case 'badge':
+            // Celebratory fanfare for badge earned
+            notes = [660, 660, 784, 880];
+            break;
+          case 'star':
+            // Bright star sound
+            notes = [800, 900];
+            break;
+          case 'perfect':
+            // Perfect round triumphant sound
+            notes = [523, 659, 784, 1047];
+            break;
+          case 'streak':
+            // Ascending success tone
+            notes = [440, 550, 660, 770];
+            break;
+          case 'levelup':
+            // Rising epic tone
+            notes = [330, 440, 550, 660, 790];
+            break;
+        }
+
         notes.forEach((freq, i) => {
           const osc = ctx.createOscillator();
           const gain = ctx.createGain();
@@ -34,7 +62,7 @@ export function useSound() {
           osc.frequency.value = freq;
           const start = ctx.currentTime + i * 0.12;
           gain.gain.setValueAtTime(0.001, start);
-          gain.gain.exponentialRampToValueAtTime(0.2, start + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.15, start + 0.02);
           gain.gain.exponentialRampToValueAtTime(0.001, start + 0.18);
           osc.connect(gain).connect(ctx.destination);
           osc.start(start);

@@ -28,6 +28,11 @@ Schwierigkeitsstufen (1 = leicht … 3 = schwer).
 - Analoguhr, **minutengenau**. Stufe 1: 5-Minuten-Schritte, Stufe 2: genau,
   Stufe 3: **Doppelantwort** (Vor- und Nachmittag).
 - Erkennt „Zeiger vertauscht" und erklärt Stunden-/Minutenzeiger.
+- **Zusätzlicher Aufgabentyp** (nicht aus dem Arbeitsheft, nur Stufe 1/2):
+  „Stelle die Uhr ein" – zu einer vorgegebenen digitalen Uhrzeit zieht das Kind
+  die Zeiger der interaktiven `SettableClock` an die richtige Stelle (per Maus/
+  Touch oder Pfeiltasten). Trainiert die Rückrichtung (digital → Zifferblatt)
+  und die Zuordnung 24-h-Zeit → 12-h-Ziffernblatt.
 
 ### Block B — Zeitspannen
 - Pfeil `Start ──?── Ziel`. Varianten: Dauer / Endzeit / Startzeit gesucht.

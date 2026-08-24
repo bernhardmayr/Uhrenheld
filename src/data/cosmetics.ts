@@ -11,9 +11,13 @@ export const AVATARS: Avatar[] = [
   { id: 'fox', emoji: '🦊', name: 'Fuchs', unlockPoints: 0 },
   { id: 'owl', emoji: '🦉', name: 'Eule', unlockPoints: 0 },
   { id: 'cat', emoji: '🐱', name: 'Katze', unlockPoints: 100 },
+  { id: 'penguin', emoji: '🐧', name: 'Pinguin', unlockPoints: 150 },
   { id: 'robot', emoji: '🤖', name: 'Roboter', unlockPoints: 300 },
+  { id: 'bear', emoji: '🐻', name: 'Bär', unlockPoints: 400 },
   { id: 'dragon', emoji: '🐲', name: 'Drache', unlockPoints: 600 },
+  { id: 'lion', emoji: '🦁', name: 'Löwe', unlockPoints: 800 },
   { id: 'unicorn', emoji: '🦄', name: 'Einhorn', unlockPoints: 1000 },
+  { id: 'rocket', emoji: '🚀', name: 'Rakete', unlockPoints: 1200 },
 ];
 
 export interface ClockFace {
@@ -28,6 +32,9 @@ export const CLOCK_FACES: ClockFace[] = [
   { id: 'ocean', name: 'Ozean', ring: '#0284c7', unlockPoints: 150 },
   { id: 'forest', name: 'Wald', ring: '#16a34a', unlockPoints: 400 },
   { id: 'berry', name: 'Beere', ring: '#db2777', unlockPoints: 800 },
+  { id: 'sunset', name: 'Sonnenuntergang', ring: '#f97316', unlockPoints: 500 },
+  { id: 'midnight', name: 'Mitternacht', ring: '#1e293b', unlockPoints: 700 },
+  { id: 'gold', name: 'Gold', ring: '#ca8a04', unlockPoints: 900 },
 ];
 
 export function isUnlocked(unlockPoints: number, totalPoints: number): boolean {

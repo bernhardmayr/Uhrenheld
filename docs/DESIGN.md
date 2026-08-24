@@ -27,6 +27,11 @@ aber Farbwelt, Uhr-Darstellung und Wortwahl bleiben erkennbar.
 - **Analoguhr** (`AnalogClock.tsx`): weißes Zifferblatt, Ziffern 1–12, feine
   Minutenstriche (jede fünfte länger), blauer Stundenzeiger, roter
   Minutenzeiger, optionaler amberfarbener Sekundenzeiger + gelber Sektor.
+  Zifferblatt, Striche und Ziffern sind als `ClockFace` ausgelagert, damit die
+  interaktive Uhr exakt gleich aussieht.
+- **Stellbare Uhr** (`SettableClock.tsx`): gleiches Zifferblatt, aber Stunden-
+  und Minutenzeiger sind ziehbare `role="slider"`-Griffe (Maus/Touch/
+  Pfeiltasten). Für die Zusatzaufgabe „Stelle die Uhr ein" in Block A.
 - **Stoppuhr** (`Stopwatch.tsx`): graues Gehäuse, roter Druckknopf, `mm:ss`.
 - **Timeline** (`Timeline.tsx`): Startzeit — beschrifteter Pfeil — Zielzeit.
 - **Countdown** (`Countdown.tsx`): Balken, grün → gelb → rot.
