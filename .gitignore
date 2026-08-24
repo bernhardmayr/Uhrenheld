@@ -5,6 +5,8 @@ node_modules/
 dist/
 dev-dist/
 coverage/
+test-results/
+playwright-report/
 
 # Editor / OS
 .DS_Store
