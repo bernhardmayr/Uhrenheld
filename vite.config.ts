@@ -3,9 +3,10 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
-// GitHub Pages serves the app from /uhrenheld/, so every asset URL needs that base.
+// GitHub Pages project sites are served at /<repo-name>/ using the repo's exact
+// casing (case-sensitive), so this must match "Uhrenheld", not "uhrenheld".
 export default defineConfig({
-  base: '/uhrenheld/',
+  base: '/Uhrenheld/',
   plugins: [
     react(),
     VitePWA({
@@ -16,8 +17,8 @@ export default defineConfig({
         short_name: 'Uhrenheld',
         description: 'Lerne spielerisch die Uhr lesen und mit Zeit rechnen.',
         lang: 'de',
-        start_url: '/uhrenheld/',
-        scope: '/uhrenheld/',
+        start_url: '/Uhrenheld/',
+        scope: '/Uhrenheld/',
         display: 'standalone',
         background_color: '#fff7ed',
         theme_color: '#f97316',

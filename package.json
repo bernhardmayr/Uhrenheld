@@ -5,7 +5,7 @@
   "type": "module",
   "license": "MIT",
   "description": "Uhrenheld – a playful web app that teaches 3rd graders to read clocks and calculate with points in time and time spans.",
-  "homepage": "https://bernhardmayr.github.io/uhrenheld/",
+  "homepage": "https://bernhardmayr.github.io/Uhrenheld/",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

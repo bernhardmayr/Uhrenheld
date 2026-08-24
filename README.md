@@ -7,7 +7,7 @@ Eine spielerische Lern-Web-App, die Grundschulkindern (3. Klasse, 8–9 Jahre) d
 **Uhrlesen** und das **Rechnen mit Zeitpunkten und Zeitspannen** beibringt – mit
 Punkten, Serien, Herzen, Sternen und Abzeichen statt Arbeitsblatt am Bildschirm.
 
-**Live-Demo:** https://bernhardmayr.github.io/uhrenheld/
+**Live-Demo:** https://bernhardmayr.github.io/Uhrenheld/
 
 <p>
   <img src="docs/screenshots/levelmap.png" alt="Levelkarte mit Stationen A–H" width="49%" />
@@ -47,7 +47,7 @@ React Testing Library · vite-plugin-pwa. Details in
 
 ```bash
 npm install
-npm run dev      # http://localhost:5173/uhrenheld/
+npm run dev      # http://localhost:5173/Uhrenheld/
 npm run test     # Tests
 npm run build    # Produktions-Build nach dist/
 ```

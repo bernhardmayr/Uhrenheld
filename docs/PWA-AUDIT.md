@@ -13,8 +13,8 @@ Build: Production (vite build)
   - Short name: "Uhrenheld"
   - Description: "Lerne spielerisch die Uhr lesen und mit Zeit rechnen."
   - Display mode: `standalone` (full-screen, no browser UI)
-  - Start URL: `/uhrenheld/` (correct base path for GitHub Pages)
-  - Scope: `/uhrenheld/` (isolates app in subpath)
+  - Start URL: `/Uhrenheld/` (correct base path for GitHub Pages, matching the repo's exact case)
+  - Scope: `/Uhrenheld/` (isolates app in subpath)
   - Theme color: `#f97316` (matches Tailwind heft.orange)
   - Background color: `#fff7ed` (warm beige, reduces white flash)
 
