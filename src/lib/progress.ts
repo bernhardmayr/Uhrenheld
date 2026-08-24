@@ -165,11 +165,25 @@ export const BADGES: BadgeDef[] = [
     earned: (p) => p.perfectRounds >= 1,
   },
   {
+    id: 'perfect-5',
+    title: 'Perfektionist',
+    description: '5 fehlerfreie Runden.',
+    icon: '✨',
+    earned: (p) => p.perfectRounds >= 5,
+  },
+  {
     id: 'points-200',
     title: 'Punktesammler',
     description: 'Über 200 Punkte gesammelt.',
     icon: '⭐',
     earned: (p) => p.totalPoints >= 200,
+  },
+  {
+    id: 'points-500',
+    title: 'Aufsteiger',
+    description: 'Über 500 Punkte gesammelt.',
+    icon: '📈',
+    earned: (p) => p.totalPoints >= 500,
   },
   {
     id: 'points-1000',
@@ -179,6 +193,13 @@ export const BADGES: BadgeDef[] = [
     earned: (p) => p.totalPoints >= 1000,
   },
   {
+    id: 'points-2000',
+    title: 'Zeit-Legende',
+    description: 'Über 2000 Punkte gesammelt.',
+    icon: '👑',
+    earned: (p) => p.totalPoints >= 2000,
+  },
+  {
     id: 'streak-3',
     title: 'Drei Tage dabei',
     description: '3 Tage hintereinander geübt.',
@@ -186,11 +207,26 @@ export const BADGES: BadgeDef[] = [
     earned: (p) => p.streak.best >= 3,
   },
   {
+    id: 'streak-7',
+    title: 'Wochenmeister',
+    description: '7 Tage hintereinander geübt.',
+    icon: '🌟',
+    earned: (p) => p.streak.best >= 7,
+  },
+  {
     id: 'clock-master',
     title: 'Uhren-Profi',
     description: '3 Sterne beim Uhr-Ablesen (Stufe 3).',
     icon: '🕐',
     earned: (p) => (p.stars['A3'] ?? 0) >= 3,
+  },
+  {
+    id: 'hard-mode-hero',
+    title: 'Schwierigkeits-Held',
+    description: 'Mind. 1 Stern in schwierigster Stufe (3) in jedem Bereich.',
+    icon: '⚡',
+    earned: (p) =>
+      ALL_BLOCKS.every((b) => (p.stars[`${b}3`] ?? 0) >= 1),
   },
   {
     id: 'all-blocks',
@@ -203,6 +239,27 @@ export const BADGES: BadgeDef[] = [
           ([k, v]) => k.startsWith(b) && v >= 1,
         ),
       ),
+  },
+  {
+    id: 'block-h-pro',
+    title: 'Geschichte-Meister',
+    description: '3 Sterne bei Sachaufgaben (Block H, Stufe 3).',
+    icon: '📖',
+    earned: (p) => (p.stars['H3'] ?? 0) >= 3,
+  },
+  {
+    id: 'rounds-50',
+    title: 'Spieler',
+    description: '50 Runden absolviert.',
+    icon: '🎮',
+    earned: (p) => p.roundsPlayed >= 50,
+  },
+  {
+    id: 'rounds-100',
+    title: 'Meisterschüler',
+    description: '100 Runden absolviert.',
+    icon: '🏅',
+    earned: (p) => p.roundsPlayed >= 100,
   },
 ];
 
