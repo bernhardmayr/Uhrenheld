@@ -54,6 +54,16 @@ npm run build    # Produktions-Build nach dist/
 
 Node ≥ 20 (siehe `.nvmrc`).
 
+## Dokumentation
+
+- 📖 **[SPEC.md](docs/SPEC.md)** – Fachliche Spezifikation & Lernziele pro Block
+- 🎨 **[DESIGN.md](docs/DESIGN.md)** – Farbpalette, Komponenten, Barrierefreiheit
+- 🎮 **[GAMEPLAY.md](docs/GAMEPLAY.md)** – Punktesystem, Abzeichen, Progression
+- ✅ **[TESTING.md](docs/TESTING.md)** – Unit-Tests (100%), E2E-Tests, Debugging
+- 🚀 **[DEPLOYMENT.md](docs/DEPLOYMENT.md)** – GitHub Pages-Workflow, CI/CD, Rollback
+- 📅 **[ROADMAP.md](docs/ROADMAP.md)** – Meilensteine M0–M5, Status
+- 🔍 **[PWA-AUDIT.md](docs/PWA-AUDIT.md)** – Offline-Funktionalität, Manifest-Audit
+
 ## Projektstruktur
 
 ```
